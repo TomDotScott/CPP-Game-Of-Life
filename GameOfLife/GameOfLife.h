@@ -18,11 +18,11 @@ struct Automaton
 	int m_generation = 0;
 };
 
-class Simulation
+class GameOfLife
 {
 public:
-	Simulation();
-	void Update();
+	GameOfLife();
+	void Tick();
 	void Render(sf::RenderWindow& window);
 private:
 	std::array<std::array<Automaton, sim_constants::amountX>, sim_constants::amountY> m_automata;
