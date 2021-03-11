@@ -15,7 +15,7 @@ int main()
 
 	sf::Clock clock;
 
-	GameOfLife sim;
+	GameOfLife sim({0, 0}, {800, 800});
 	
 	// Start the game loop
 	while (window.isOpen())

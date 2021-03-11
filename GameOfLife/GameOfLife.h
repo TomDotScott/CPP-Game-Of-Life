@@ -1,32 +1,28 @@
 #pragma once
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <array>
-// These rules, which compare the behavior of the automaton to real life, can be condensed into the following :
-// 1. Any live cell with two or three live neighbours survives.
-// 2. Any dead cell with three live neighbours becomes a live cell.
-// 3. All other live cells die in the next generation. Similarly, all other dead cells stay dead.
-
-namespace sim_constants
-{
-	const int amountX = 100;
-	const int amountY = 100;
-}
+#include <vector>
 
 struct Automaton
 {
-	bool m_alive = false;
-	int m_generation = 0;
+	Automaton(const bool state) : m_alive(state), m_generation(0) {}
+	bool m_alive;
+	int m_generation;
 };
 
 class GameOfLife
 {
 public:
-	GameOfLife();
+	GameOfLife(const sf::Vector2i& startPosition, const sf::Vector2i& windowSize);
 	void Tick();
 	void Render(sf::RenderWindow& window);
 private:
-	std::array<std::array<Automaton, sim_constants::amountX>, sim_constants::amountY> m_automata;
+	std::vector<std::vector<Automaton>> m_automata;
+	sf::Vector2i m_startPosition;
+	sf::Vector2i m_windowSize;
+	int m_numRows;
+	int m_numCols;
 
+	
 	int GetNeighbourCount(int col, int row) const;
 };
 
