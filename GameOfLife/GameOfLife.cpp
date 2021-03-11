@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "FPS.h"
+#include "Simulation.h"
 
 int main()
 {
@@ -13,6 +14,8 @@ int main()
 
 	sf::Clock clock;
 
+	Simulation sim;
+	
 	// Start the game loop
 	while (window.isOpen())
 	{
@@ -35,9 +38,11 @@ int main()
 		while (clock.getElapsedTime() >= sf::milliseconds(200))
 		{
 			clock.restart();
+			sim.Update();
 		}
 
 		window.clear();
+		sim.Render(window);
 		window.display();
 	}
 	return EXIT_SUCCESS;
