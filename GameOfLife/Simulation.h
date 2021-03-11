@@ -12,6 +12,12 @@ namespace sim_constants
 	const int amountY = 100;
 }
 
+struct Automaton
+{
+	bool m_alive = false;
+	int m_generation = 0;
+};
+
 class Simulation
 {
 public:
@@ -19,6 +25,8 @@ public:
 	void Update();
 	void Render(sf::RenderWindow& window);
 private:
-	std::array<std::array<bool, sim_constants::amountX>, sim_constants::amountY> m_automata;
+	std::array<std::array<Automaton, sim_constants::amountX>, sim_constants::amountY> m_automata;
+
+	int GetNeighbourCount(int col, int row) const;
 };
 

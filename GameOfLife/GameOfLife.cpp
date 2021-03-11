@@ -35,7 +35,7 @@ int main()
 		window.setTitle("SFML Pac-Man   FPS: " + ss.str());
 
 		// Game tick every 100 ms
-		while (clock.getElapsedTime() >= sf::milliseconds(200))
+		while (clock.getElapsedTime() >= sf::milliseconds(1000))
 		{
 			clock.restart();
 			sim.Update();
