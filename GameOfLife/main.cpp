@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "FPS.h"
+#include "Game.h"
 #include "GameOfLife.h"
 
 int main()
@@ -15,7 +16,8 @@ int main()
 
 	sf::Clock clock;
 
-	GameOfLife sim({0, 0}, {800, 800});
+	//GameOfLife sim({0, 0}, {800, 800});
+	Game game;
 	
 	// Start the game loop
 	while (window.isOpen())
@@ -35,15 +37,18 @@ int main()
 
 		window.setTitle("SFML Game Of Life    |    FPS: " + ss.str());
 
+		game.Update(window);
+		
 		// Game tick every 100 ms
-		while (clock.getElapsedTime() >= sf::milliseconds(200))
+		while (clock.getElapsedTime() >= sf::milliseconds(300))
 		{
 			clock.restart();
-			sim.Tick();
+			//sim.Tick();
 		}
 
 		window.clear();
-		sim.Render(window);
+		//sim.Render(window);
+		game.Render(window);
 		window.display();
 	}
 	return EXIT_SUCCESS;

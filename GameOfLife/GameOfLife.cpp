@@ -9,21 +9,7 @@ GameOfLife::GameOfLife(const sf::Vector2i& startPosition, const sf::Vector2i& wi
 	m_windowSize(windowSize),
 	m_numRows(100),
 	m_numCols(100)
-{
-	for (int i = 0; i < m_numCols; ++i)
-	{
-		std::vector<Automaton> aVector;
-		for (int j = 0; j < m_numRows; j++)
-		{
-			Automaton a{ false };
-			if (rand() % 100 < 25)
-			{
-				a.m_alive = true;
-			}
-			aVector.push_back(a);
-		}
-		m_automata.push_back(aVector);
-	}
+{	
 }
 
 void GameOfLife::Tick()
@@ -81,6 +67,18 @@ void GameOfLife::Render(sf::RenderWindow& window)
 	}
 }
 
+void GameOfLife::SetRows(const int amount)
+{
+	m_numRows = amount;
+	ClearBoard();
+}
+
+void GameOfLife::SetColumns(const int amount)
+{
+	m_numCols = amount;
+	ClearBoard();
+}
+
 int GameOfLife::GetNeighbourCount(const int col, const int row) const
 {
 	int neighbourCount = 0;
@@ -134,5 +132,19 @@ int GameOfLife::GetNeighbourCount(const int col, const int row) const
 	}
 
 	return neighbourCount;
+}
+
+void GameOfLife::ClearBoard()
+{
+	m_automata.clear();
+	for (int i = 0; i < m_numCols; ++i)
+	{
+		std::vector<Automaton> aVector;
+		for (int j = 0; j < m_numRows; j++)
+		{
+			aVector.emplace_back(false);
+		}
+		m_automata.emplace_back(aVector);
+	}
 }
 

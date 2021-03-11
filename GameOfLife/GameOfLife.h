@@ -4,7 +4,7 @@
 
 struct Automaton
 {
-	Automaton(const bool state) : m_alive(state), m_generation(0) {}
+	explicit Automaton(const bool state) : m_alive(state), m_generation(0) {}
 	bool m_alive;
 	int m_generation;
 };
@@ -15,6 +15,10 @@ public:
 	GameOfLife(const sf::Vector2i& startPosition, const sf::Vector2i& windowSize);
 	void Tick();
 	void Render(sf::RenderWindow& window);
+
+	void SetRows(int amount);
+	void SetColumns(int amount);
+
 private:
 	std::vector<std::vector<Automaton>> m_automata;
 	sf::Vector2i m_startPosition;
@@ -22,7 +26,8 @@ private:
 	int m_numRows;
 	int m_numCols;
 
-	
+
 	int GetNeighbourCount(int col, int row) const;
+	void ClearBoard();
 };
 
