@@ -39,19 +39,19 @@ void Simulation::Update()
 				automaton.m_alive = false;
 			}
 
-			// 2. Any dead cell with three live neighbours becomes a live cell.
-			if(neighbourCount == 3 && !automaton.m_alive)
-			{
-				automaton.m_alive = true;
-				automaton.m_generation = 0;
-			}
-
 			// 3. All other live cells die in the next generation. Similarly, all other dead cells stay dead.
 			automaton.m_generation++;
 			
-			if(m_automata[i][j].m_generation > 1)
+			if(automaton.m_generation > 1)
 			{
 				automaton.m_alive = false;
+			}
+
+			// 2. Any dead cell with three live neighbours becomes a live cell.
+			if (neighbourCount == 3 && !automaton.m_alive)
+			{
+				automaton.m_alive = true;
+				automaton.m_generation = 0;
 			}
 		}
 	}
@@ -61,8 +61,8 @@ void Simulation::Render(sf::RenderWindow& window)
 {
 	sf::RectangleShape automaton{{8, 8}};
 	automaton.setFillColor(sf::Color::Blue);
-	automaton.setOutlineThickness(1.f);
-	automaton.setOutlineColor(sf::Color::White);
+	/*automaton.setOutlineThickness(1.f);
+	automaton.setOutlineColor(sf::Color::White);*/
 /*	sf::Font font;
 	font.loadFromFile("font.ttf");
 	sf::Text debugText;
@@ -90,27 +90,55 @@ void Simulation::Render(sf::RenderWindow& window)
 int Simulation::GetNeighbourCount(const int col, const int row) const
 {
 	int neighbourCount = 0;
-	
-	if(col != 0 && m_automata[col - 1][row].m_alive)
+
+	// TL
+	if (col != 0 && row != 0 && m_automata[col - 1][row - 1].m_alive)
 	{
 		neighbourCount++;
 	}
 
+	// Top
+	if (row != 0 && m_automata[col][row - 1].m_alive)
+	{
+		neighbourCount++;
+	}
+
+	// TR
+	if (col != sim_constants::amountY - 1 && row != 0 && m_automata[col + 1][row - 1].m_alive)
+	{
+		neighbourCount++;
+	}
+
+	// Left 
+	if (col != 0 && m_automata[col - 1][row].m_alive)
+	{
+		neighbourCount++;
+	}
+	
+	// Right
 	if(col < sim_constants::amountY - 1 && m_automata[col + 1][row].m_alive)
 	{
 		neighbourCount++;
 	}
 
-	if(row < sim_constants::amountX - 1 && m_automata[col][row + 1].m_alive)
+	// BL
+	if (col != 0 && row < sim_constants::amountX - 1 && m_automata[col - 1][row + 1].m_alive)
 	{
 		neighbourCount++;
 	}
 
-	if(row != 0 && m_automata[col][row - 1].m_alive)
+	// BR
+	if (col != sim_constants::amountY - 1 && row < sim_constants::amountX - 1 && m_automata[col + 1][row + 1].m_alive)
 	{
 		neighbourCount++;
 	}
 
+	// Bottom
+	if (row < sim_constants::amountX - 1 && m_automata[col][row + 1].m_alive)
+	{
+		neighbourCount++;
+	}
+	
 	return neighbourCount;
 }
 

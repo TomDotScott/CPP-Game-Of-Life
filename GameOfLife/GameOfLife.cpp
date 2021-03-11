@@ -8,6 +8,7 @@
 
 int main()
 {
+	srand(time(nullptr));
 	sf::RenderWindow window(sf::VideoMode(800, 800), "SFML Pac-Man");
 
 	FPS fps;
@@ -35,7 +36,7 @@ int main()
 		window.setTitle("SFML Pac-Man   FPS: " + ss.str());
 
 		// Game tick every 100 ms
-		while (clock.getElapsedTime() >= sf::milliseconds(1000))
+		while (clock.getElapsedTime() >= sf::milliseconds(200))
 		{
 			clock.restart();
 			sim.Update();
