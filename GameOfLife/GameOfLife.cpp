@@ -79,6 +79,13 @@ void GameOfLife::SetColumns(const int amount)
 	ClearBoard();
 }
 
+void GameOfLife::OnClick(const int row, const int col)
+{
+	auto& automaton = m_automata[col][row];
+	automaton.m_alive = automaton.m_alive ? false : true;
+	m_automata[col][row].m_generation = 0;
+}
+
 int GameOfLife::GetNeighbourCount(const int col, const int row) const
 {
 	int neighbourCount = 0;
@@ -145,6 +152,25 @@ void GameOfLife::ClearBoard()
 			aVector.emplace_back(false);
 		}
 		m_automata.emplace_back(aVector);
+	}
+}
+
+void GameOfLife::GenerateRandomAutomata()
+{
+	m_automata.clear();
+	for (int i = 0; i < m_numCols; ++i)
+	{
+		std::vector<Automaton> aVector;
+		for (int j = 0; j < m_numRows; j++)
+		{
+			Automaton a{ false };
+			if (rand() % 100 < 25)
+			{
+				a.m_alive = true;
+			}
+			aVector.push_back(a);
+		}
+		m_automata.push_back(aVector);
 	}
 }
 

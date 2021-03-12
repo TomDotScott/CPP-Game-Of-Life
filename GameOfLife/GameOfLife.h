@@ -19,6 +19,9 @@ public:
 	void SetRows(int amount);
 	void SetColumns(int amount);
 
+	void OnClick(int row, int col);
+	void GenerateRandomAutomata();
+
 private:
 	std::vector<std::vector<Automaton>> m_automata;
 	sf::Vector2i m_startPosition;
